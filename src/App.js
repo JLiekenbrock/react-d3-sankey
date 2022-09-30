@@ -9,8 +9,7 @@ import Box from '@mui/material/Box';
 import LoadSankeyData from './LoadSankeyData';
 import CallSankey from './CallSankey';
 
-
-function App() {
+export default function App() {
 
   var data = LoadSankeyData()
   console.log(data)
@@ -62,5 +61,3 @@ function App() {
 
   );
 }
-
-export default App;
