@@ -31,6 +31,7 @@ const SankeySlider = ({value,setValue,min,max}) => {
             getAriaValueText={valuetext}
             disableSwap
             max = {max}
+            min = {min}
         />
     );
 }

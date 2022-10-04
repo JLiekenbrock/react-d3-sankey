@@ -15,9 +15,12 @@ export default function App() {
 
   const [filteredData, filterData] = useState([]);
 
-  const [value1, setValue1] = useState([0,100]);
+  const [minMax,setMinMax] = useState([])
 
-  FetchSankeyData(loadData,filterData);
+  const [value1, setValue1] = useState([]);
+
+
+  FetchSankeyData(loadData,filterData,setMinMax,setValue1);
 
   useEffect(() => {
     filterData(
@@ -30,7 +33,7 @@ export default function App() {
       <Box sx={{ flexGrow: 1, mb: 5, mt:4 }}>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12}>
-            <SankeySlider value = {value1} setValue = {setValue1} min = {0} max = {1000}/>
+            <SankeySlider value = {value1} setValue = {setValue1} min = {minMax[0]} max = {minMax[1]}/>
           </Grid>
         </Grid>
       </Box>
