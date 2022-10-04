@@ -56,7 +56,10 @@ export default function SankeyFun(
   if (nodes === undefined)
     nodes = Array.from(d3.union(LS, LT), (id) => ({ id }));
   const N = d3.map(nodes, nodeId).map(intern);
+
   const G = nodeGroup == null ? null : d3.map(nodes, nodeGroup).map(intern);
+
+  console.log("G",G)
   // Replace the input nodes and links with mutable objects for the simulation.
   nodes = d3.map(nodes, (_, i) => ({ id: N[i] }));
   links = d3.map(links, (_, i) => ({
@@ -71,9 +74,13 @@ export default function SankeyFun(
 
   // Compute default domains.
   if (G && nodeGroups === undefined) nodeGroups = G;
+  console.log(G)
+
+  console.log(nodeGroups)
   // Construct the scales.
   const color = nodeGroup == null ? null : d3.scaleOrdinal(nodeGroups, colors);
 
+  console.log(color)
   // Compute the Sankey layout.
   d3Sankey
     .sankey()
@@ -97,8 +104,6 @@ export default function SankeyFun(
   const Tt = nodeTitle == null ? null : d3.map(nodes, nodeTitle);
   const Lt = linkTitle == null ? null : d3.map(links, linkTitle);
 
-  console.log(Tt);
-
   // A unique identifier for clip paths (to avoid conflicts).
   const uid = `O-${Math.random().toString(16).slice(2)}`;
 
@@ -107,7 +112,6 @@ export default function SankeyFun(
   svg.selectAll("*").remove();
 
   svg
-    .classed("sankey-chart-svg", true)
     .attr("width", width)
     .attr("height", height)
     .attr("viewBox", [0, 0, width, height])

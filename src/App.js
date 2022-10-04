@@ -1,12 +1,12 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
 import SankeySlider from "./SankeySlider";
-//import LoadSankeyData from "./LoadSankeyData";
-import FetchSankeyData from "./FetchSankeyData";
+import LoadSankeyData from "./LoadSankeyData";
+//import FetchSankeyData from "./FetchSankeyData";
 import CallSankey from "./CallSankey";
 
 export default function App() {
@@ -19,14 +19,13 @@ export default function App() {
 
   const [value1, setValue1] = useState([]);
 
-
-  FetchSankeyData(loadData,filterData,setMinMax,setValue1);
+  LoadSankeyData(loadData,filterData,setMinMax,setValue1);
 
   useEffect(() => {
     filterData(
       completeData.filter((d) => d.value >= value1[0] && d.value <= value1[1])
     );
-  }, [value1]);
+  }, [value1,completeData]);
 
   return (
     <Container maxWidth="xl">

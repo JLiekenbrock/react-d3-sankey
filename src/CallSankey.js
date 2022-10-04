@@ -9,6 +9,7 @@ function CallSankey({ data }) {
     SankeyFun(
       { links: data, svgRef },
       {
+        nodeGroup: d => d.id.split(/\W/)[0], // take first word for color
         height: 1000,
         width: 2000
       }
