@@ -1,63 +1,43 @@
-import './App.css';
-import { useState } from 'react';
+import { useState, useEffect, useContext } from "react";
 
-import Slider from '@mui/material/Slider';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 
-import LoadSankeyData from './LoadSankeyData';
-import CallSankey from './CallSankey';
+import SankeySlider from "./SankeySlider";
+//import LoadSankeyData from "./LoadSankeyData";
+import FetchSankeyData from "./FetchSankeyData";
+import CallSankey from "./CallSankey";
 
 export default function App() {
 
-  var data = LoadSankeyData()
-  console.log(data)
+  const [filteredData, filterData] = useState([]);
 
-  const [data1, setData1] = useState([]);
+  const [value1, setValue1] = useState([0,100]);
 
-  function valuetext(value) {
-    return `${value}°C`;
-  }
-  const minDistance = 1;
+  var sankeyData = FetchSankeyData();
 
-  const [value1, setValue1] = useState([0, 100]);
 
-  const handleChange1 = (event, newValue, activeThumb) => {
-    if (!Array.isArray(newValue)) {
-      return;
-    }
-    if (activeThumb === 0) {
-      setValue1([Math.min(newValue[0], value1[1] - minDistance), value1[1]]);
-    } else {
-      setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
-    }
-    setData1(data.filter((d) => d.value >= newValue[0] && d.value <= newValue[1]))
-    console.log(data1)
-  };
+  useEffect(() => {
+    filterData(
+      sankeyData.filter((d) => d.value >= value1[0] && d.value <= value1[1])
+    );
+  }, [value1]);
 
   return (
     <Container maxWidth="xl">
-      <Box sx={{ flexGrow: 1, mb: 5 }}>
+      <Box sx={{ flexGrow: 1, mb: 5, mt:4 }}>
         <Grid container spacing={2} alignItems="center" justify="center">
           <Grid item xs={12}>
-            <Slider
-              getAriaLabel={() => 'Minimum distance'}
-              value={value1}
-              onChange={handleChange1}
-              valueLabelDisplay="auto"
-              getAriaValueText={valuetext}
-              disableSwap
-            />
+            <SankeySlider value = {value1} setValue = {setValue1} min = {0} max = {1000}/>
           </Grid>
         </Grid>
       </Box>
-      <Box sx={{ flexGrow: 1, height: '100%' }}>
+      <Box sx={{ flexGrow: 1, height: "100%" }}>
         <Grid item xs={12}>
-          {data1.length > 0 && <CallSankey data={data1} />}
+          {filteredData.length > 0 && <CallSankey data={filteredData} />}
         </Grid>
       </Box>
     </Container>
-
   );
 }
