@@ -11,16 +11,17 @@ import CallSankey from "./CallSankey";
 
 export default function App() {
 
+  const [completeData, loadData] = useState([]);
+
   const [filteredData, filterData] = useState([]);
 
   const [value1, setValue1] = useState([0,100]);
 
-  var sankeyData = FetchSankeyData();
-
+  FetchSankeyData(loadData,filterData);
 
   useEffect(() => {
     filterData(
-      sankeyData.filter((d) => d.value >= value1[0] && d.value <= value1[1])
+      completeData.filter((d) => d.value >= value1[0] && d.value <= value1[1])
     );
   }, [value1]);
 
