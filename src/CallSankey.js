@@ -1,8 +1,14 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useContext } from "react";
 
 import SankeyFun from "./SankeyFun";
 
-function CallSankey({ data }) {
+import { dataContext } from "./App";
+
+
+function CallSankey() {
+
+  const data = useContext(dataContext);
+
   var svgRef = useRef(null);
 
   useEffect(() => {

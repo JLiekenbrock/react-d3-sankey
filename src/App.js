@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, createContext, useEffect } from "react";
 
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -9,7 +9,11 @@ import LoadSankeyData from "./LoadSankeyData";
 //import FetchSankeyData from "./FetchSankeyData";
 import CallSankey from "./CallSankey";
 
+export const dataContext = createContext();
+
+
 export default function App() {
+
 
   const [completeData, loadData] = useState([]);
 
@@ -28,6 +32,7 @@ export default function App() {
   }, [value1,completeData]);
 
   return (
+    <dataContext.Provider value = {filteredData}>
     <Container maxWidth="xl">
       <Box sx={{ flexGrow: 1, mb: 5, mt:4 }}>
         <Grid container spacing={2} alignItems="center" justify="center">
@@ -38,9 +43,10 @@ export default function App() {
       </Box>
       <Box sx={{ flexGrow: 1, height: "100%" }}>
         <Grid item xs={12}>
-          {filteredData.length > 0 && <CallSankey data={filteredData} />}
+          {filteredData.length > 0 && <CallSankey />}
         </Grid>
       </Box>
     </Container>
+    </dataContext.Provider>
   );
 }
